@@ -1,0 +1,11 @@
+openai
+langchain==0.2.5
+langchain-community
+faiss-cpu
+sentence-transformers
+transformers
+pandas
+fastapi
+uvicorn
+python-dotenv
+pydantic
