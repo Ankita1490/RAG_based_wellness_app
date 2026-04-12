@@ -18,3 +18,8 @@ def save_text(text: str, file_path: Path) -> None:
     ensure_directory(file_path.parent)
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(text)
+
+def load_json(file_path: Path) -> Any:
+    """Loads data from a JSON file."""
+    with open(file_path, "r", encoding="utf-8") as f:
+        return json.load(f)
