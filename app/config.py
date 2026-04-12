@@ -13,3 +13,5 @@ EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 FAISS_INDEX_PATH = VECTORS_DIR / "faiss_index"
 METADATA_PATH = VECTORS_DIR / "chunk_metadata.json"
 CHUNK_PATH = PROCESSED_DATA_DIR/"K4Ze-Sp6aUE_chunks.json"
+
+TOP_K = 3

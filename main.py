@@ -1,10 +1,11 @@
-from app.config import RAW_DATA_DIR, PROCESSED_DATA_DIR, CHUNK_PATH,FAISS_INDEX_PATH
+from app.config import RAW_DATA_DIR, PROCESSED_DATA_DIR, CHUNK_PATH,FAISS_INDEX_PATH, TOP_K
 from app.ingestion.youtube_loader import fetch_youtube_transcript
 from app.ingestion.cleaner import extract_text_from_transcript, clean_text
 from app.ingestion.chunker import chunk_text
 from app.embeddings.embedder import load_embedding_model
 from app.vectorstore.faiss_store import build_faiss_index, save_faiss_index, save_metadata
 from app.utils.file_handler import save_json, save_text, load_json
+from app.retrival.retriever import load_vectorstore, retrieve_relevant_chunks
 
 
 def main():
@@ -53,6 +54,24 @@ def main():
     # Save the FAISS index
     save_faiss_index(vector_store, FAISS_INDEX_PATH)
 
+    query = "What does the video say about a balanced diet?"
+    # load embedding model
+    embedding_model = load_embedding_model()
+    print(f"Loaded embedding model: {embedding_model}")
+
+    #load FAISS vector store
+    vector_store = load_vectorstore(FAISS_INDEX_PATH, embedding_model)
+    print(f"Loaded FAISS vector store")
+
+    # retrieve k-top similar chunks
+    results = retrieve_relevant_chunks(vector_store, query, top_k=TOP_K)
+    print(f"Retrived top {TOP_K} relevant chunks for the query: '{query}'")
+
+    for i , doc in enumerate(results, start=0):
+        print(f"\n--- Result {i+1} ---")
+        print(f"Content: {doc.page_content[:500]}")  # Print the first 500 characters of the chunk
+        print(f"Metadata: {doc.metadata}")
+        print()
 
 if __name__ == "__main__":
     main()
