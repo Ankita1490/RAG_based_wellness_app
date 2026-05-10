@@ -14,4 +14,7 @@ FAISS_INDEX_PATH = VECTORS_DIR / "faiss_index"
 METADATA_PATH = VECTORS_DIR / "chunk_metadata.json"
 CHUNK_PATH = PROCESSED_DATA_DIR/"K4Ze-Sp6aUE_chunks.json"
 
-TOP_K = 3
+TOP_K = 2
+
+LLM_MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
+MAX_NEW_TOKENS = 128
